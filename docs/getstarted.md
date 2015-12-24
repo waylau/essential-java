@@ -1,5 +1,7 @@
 # 快速开始
 
+本章介绍了如何下载、安装、配置和调试 JDK。
+
 ## 下载、安装 JDK
 
 JDK(Java Development Kit)是用于 Java 开发的工具箱。
@@ -60,3 +62,5 @@ java version "1.8.0_66"
 Java(TM) SE Runtime Environment (build 1.8.0_66-b17)
 Java HotSpot(TM) 64-Bit Server VM (build 25.66-b17, mixed mode)
 ```
+
+更多安装细节，可以参考 <http://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html>
