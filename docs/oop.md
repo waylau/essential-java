@@ -22,15 +22,97 @@
 (5) 同一类所有对象都能接收相同的消息。由于类型为“圆”（Circle）的一个对象也属于类型为“形状”（Shape）的一个对象，所以一个圆完全能接收形状消息。这意味着可让程序代码统一指挥“形状”，令其自动控制所有符合“形状”描述的对象，其中自然包括
 “圆”。这一特性称为对象的“可替换性”，是 OOP 最重要的概念之一。
 
-## 类（Class）
+### 类（Class）的示例
 
 在现实世界中，你经常会发现许多单个对象是同类。有可能是存在其他成千上万的自行车，都是一样的品牌和型号。每个自行车都由相同的一组设计图纸而建成，并因此包含相同的组件。在面向对象的术语，我们说你的自行车被称为自行车对象类（class of objects）的实例（instance）。类就是创建单个对象的设计图纸。
 
-## 对象的接口
+下面是一个 Bicycle (自行车)类的实现：
+
+```java
+class Bicycle {
+
+    int cadence = 0;
+    int speed = 0;
+    int gear = 1;
+
+    void changeCadence(int newValue) {
+         cadence = newValue;
+    }
+
+    void changeGear(int newValue) {
+         gear = newValue;
+    }
+
+    void speedUp(int increment) {
+         speed = speed + increment;   
+    }
+
+    void applyBrakes(int decrement) {
+         speed = speed - decrement;
+    }
+
+    void printStates() {
+         System.out.println("cadence:" +
+             cadence + " speed:" + 
+             speed + " gear:" + gear);
+    }
+}
+```
+
+字段 cadence, speed, 和 gear 是对象的状态，方法 changeCadence, changeGear, speedUp 定义了与外界的交互。
+
+你可能已经注意到，Bicycle 类不包含一个 main 方法。这是因为它不是一个完整的应用程序。这是自行车的设计图纸，可能会在应用程序中使用。创建和使用新的 Bicycle对象是应用程序中的其他类的责任。
+
+下面是 BicycleDemo 类，创建两个单独的 Bicycle 对象，并调用其方法：
+
+```java
+class BicycleDemo {
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		 // Create two different 
+        // Bicycle objects
+        Bicycle bike1 = new Bicycle();
+        Bicycle bike2 = new Bicycle();
+
+        // Invoke methods on 
+        // those objects
+        bike1.changeCadence(50);
+        bike1.speedUp(10);
+        bike1.changeGear(2);
+        bike1.printStates();
+
+        bike2.changeCadence(50);
+        bike2.speedUp(10);
+        bike2.changeGear(2);
+        bike2.changeCadence(40);
+        bike2.speedUp(10);
+        bike2.changeGear(3);
+        bike2.printStates();
+
+	}
+
+}
+```
+
+执行程序，输出为：
+
+```
+cadence:50 speed:10 gear:2
+cadence:40 speed:20 gear:3
+```
+
+### 源码
+
+该例子可以在 `com.waylau.essentialjava.object.bicycleDemo` 包下找到。
+
+
+## 对象的接口（Interface）
 
 所有对象——尽管各有特色——都属于某一系列对象的一部分，这些对象具有通用的特征和行为。
 
-每个对象仅能接受特定的请求。我们向对象发出的请求是通过它的“接”（Interface）定义的，对象的“类型”或“类”则规定了它的接口形式。“类型”与“接口”的等价或对应关系是面向对象程序设计的基础。
+每个对象仅能接受特定的请求。我们向对象发出的请求是通过它的“接口”（Interface）定义的，对象的“类型”或“类”则规定了它的接口形式。“类型”与“接口”的等价或对应关系是面向对象程序设计的基础。
 
 ![](../images/oop/light.jpg)
 
@@ -40,6 +122,94 @@ lt.on();
 ```
 
 在这个例子中，类型／类的名称是 Light，Light 对象的名称是 lt ,可向 Light 对象发出的请求包括打开（on）、关闭（off）、变得更明亮（brighten ）或者变得更暗淡（dim）。通过简单地定义一个“引用（reference）”（lt），我们创建了一个 Light 对象，并用 new 关键字来请求那个类新建的对象。为了向对象发送一条消息，我们列出对象名（lt），再用一个句点符号（.）把它同消息名称（on）连接起来。从中可以看出，使用一些预先定义好的类时，我们在程序里采用的代码是非常简单和直观的。
+
+### 接口的示例
+
+对应自行车的行为，可以定义如下接口：
+
+```java
+interface Bicycle {
+
+	// wheel revolutions per minute
+	void changeCadence(int newValue);
+
+	void changeGear(int newValue);
+
+	void speedUp(int increment);
+
+	void applyBrakes(int decrement);
+}
+```
+
+实现该接口的类 ACMEBicycle，使用 implements 关键字：
+
+```java
+class ACMEBicycle implements Bicycle {
+
+	int cadence = 0;
+	int speed = 0;
+	int gear = 1;
+
+	// The compiler will now require that methods
+	// changeCadence, changeGear, speedUp, and applyBrakes
+	// all be implemented. Compilation will fail if those
+	// methods are missing from this class.
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.waylau.essentialjava.interfaceBicycleDemo.Bicycle#changeCadence(int)
+	 */
+	@Override
+	public void changeCadence(int newValue) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.waylau.essentialjava.interfaceBicycleDemo.Bicycle#changeGear(int)
+	 */
+	@Override
+	public void changeGear(int newValue) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.waylau.essentialjava.interfaceBicycleDemo.Bicycle#speedUp(int)
+	 */
+	@Override
+	public void speedUp(int increment) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.waylau.essentialjava.interfaceBicycleDemo.Bicycle#applyBrakes(int)
+	 */
+	@Override
+	public void applyBrakes(int decrement) {
+		// TODO Auto-generated method stub
+
+	}
+```
+
+**注：** 接口的实现方法前必须添加 public 关键字
+
+## 包（Package）
+
+包是组织相关的类和接口的命名空间。从概念上讲，类似于计算机上的文件夹，用来将各种文件进行分类。
+
+Java 平台提供了一个巨大的类库（包的集合），该库被称为“应用程序接口”，或简称为“API”。其包代表最常见的与通用编程相关的任务。例如，一个 String 对象包含了字符串的状态和行为; File 对象允许程序员轻松地创建，删除，检查，比较，或者修改文件系统中的文件; Socket 对象允许创建和使用网络套接字;各种 GUI 对象创建图形用户界面。从字面上有数以千计的课程可供选择。作为开发人员只需要专注于特定的应用程序的设计即可，而不是从基础设施建设开始。
 
 ## 对象提供服务
 
@@ -119,6 +289,25 @@ private | √ | × | × | ×
 
 覆盖的方法，您只需为派生类中的方法创建一个新的定义。“使用的是相同的接口方法，但在新类型里做不同的事情”。
 
+### 继承的示例
+
+不同种类的对象往往有一定量的在共同点。例如，山地自行车(Mountain Bike)，公路自行车(Road Bike)和双人自行车(Tandem Bike)，所有的自行车都有共同的特点：当前目前的速度，当前踏板节奏，当前档位。然而，每一个还定义了额外的功能，使他们不同：双人自行车有两个座位和两套车把;公路自行车有下降车把;一些山地自行车有一个附加的链环，使得他们具有一个较低的齿轮比。
+
+面向对象的编程允许类从其他类继承常用的状态和行为。在这个例子中，自行车(Bicycle)现在变成山地车，公路自行车和双人自行车的超类。在 Java 编程语言中，每一个类被允许具有一个直接超类，每个超具有无限数量的子类的潜力：
+
+![](../images/oop/concepts-bikeHierarchy.gif)
+
+继承使用 extends 关键字：
+
+```java
+class MountainBike extends Bicycle {
+
+    // new fields and methods defining 
+    // a mountain bike would go here
+}
+```
+
+
 ## is-a 和 is-like-a 的关系
 
 有个讨论是关于继承的：继承只应该重写基类方法（不添加基类中没有的新的方法）？这将意味着派生类完全是同一类的基类，因为它有完全相同的接口。作为一个结果，您可以完全用基类的对象替换派生类的对象。这可以被认为是纯粹的替代，它通常被称为替代原则。从这个意义上说，这是对待继承的理想方法。这个就是 is-a 关系，可以说，“圆是一种形状（A circle is a shape）”。这是对于测试确定一些类是否是 is-a 关系是非常有用的。
@@ -155,6 +344,6 @@ private | √ | × | × | ×
 
 1. 可替换性（substitutability）。多态对已存在代码具有可替换性。例如，多态对圆 Circle 类工作，对其他任何圆形几何体，如圆环，也同样工作。
 2. 可扩充性（extensibility）。多态对代码具有可扩充性。增加新的子类不影响已存在类的多态性、继承性，以及其他特性的运行和操作。实际上新加子类更容易获得多态功能。例如，在实现了圆锥、半圆锥以及半球体的多态基础上，很容易增添球体类的多态性。
-3. 接口性（interface-ability）。多态是超类通过方法签名，向子类提供了一个共同接口，由子类来完善或者覆盖它而实现的。如图8.3 所示。图中超类 Shape 规定了两个实现多态的接口方法，computeArea() 以及 computeVolume()。子类，如 Circle 和 Sphere 为了实现多态，完善或者覆盖这两个接口方法。
+3. 接口性（interface-ability）。多态是超类通过方法签名，向子类提供了一个共同接口，由子类来完善或者覆盖它而实现的。图中超类 Shape 规定了两个实现多态的接口方法，computeArea() 以及 computeVolume()。子类，如 Circle 和 Sphere 为了实现多态，完善或者覆盖这两个接口方法。
 4. 灵活性（flexibility）。它在应用中体现了灵活多样的操作，提高了使用效率。
 5. 简化性（simplicity）。多态简化对应用软件的代码编写和修改过程，尤其在处理大量对象的运算和操作时，这个特点尤为突出和重要。
