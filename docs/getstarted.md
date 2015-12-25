@@ -27,7 +27,7 @@ Windows x64	| 186.65 MB | jdk-8u66-windows-x64.exe
 安装路径默认安装在 `C:\Program Files\Java\jdk1.8.0_66` 或者 `usr/local/java/jdk1.8.0_66`
 
 **注：**本书中所使用JDK版本为：Java Platform (JDK) 8u66。
-本书所使用的操作系统为：Win7 Sp1 x64。
+本书所使用的操作系统为：Win7 Sp1 x64。本书的示例是在 Eclipse  Mars.1 Release (4.5.1) 工具下编写。
 
 ## 设置执行路径
 
