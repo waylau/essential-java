@@ -105,7 +105,7 @@ cadence:40 speed:20 gear:3
 
 ### 源码
 
-该例子可以在 `com.waylau.essentialjava.object.bicycleDemo` 包下找到。
+该例子可以在 `com.waylau.essentialjava.object.biycledemo` 包下找到。
 
 
 ## 对象的接口（Interface）
@@ -204,6 +204,10 @@ class ACMEBicycle implements Bicycle {
 ```
 
 **注：** 接口的实现方法前必须添加 public 关键字
+
+### 源码
+
+该例子可以在 `com.waylau.essentialjava.object.interfacebiycledemo` 包下找到。
 
 ## 包（Package）
 

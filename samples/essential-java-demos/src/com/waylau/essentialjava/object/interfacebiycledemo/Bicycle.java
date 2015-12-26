@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.waylau.essentialjava.interfaceBicycleDemo;
+package com.waylau.essentialjava.object.interfacebiycledemo;
 
 /**
  * @author <a href="http://www.waylau.com">waylau.com</a>
