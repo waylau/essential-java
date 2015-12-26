@@ -7,6 +7,7 @@ This is the summary of my book.
 * [面向对象编程](docs/oop.md)
 * [语言基础](docs/basics.md)
 	* [变量](docs/variables.md)
+	* [运算符](docs/operators.md)
 * [关键字](docs/keywords.md)
 * [IO](docs/io.md)
 * [多线程](docs/multithreading.md)
