@@ -214,6 +214,8 @@ byte <（short=char）< int < long < float < double
 
 如果从小转换到大，可以自动完成，而从大到小，必须强制转换。short 和 char 两种相同类型也必须强制转换。
 
+![](../images/basics/conversion.jpg)
+
 ### 自动转换
 
 自动转换时发生扩宽（widening conversion）。因为较大的类型（如int）要保存较小的类型（如byte），内存总是足够的，不需要强制转换。如果将字面值保存到 byte、short、char、long 的时候，也会自动进行类型转换。注意区别，此时从 int（没有带L的整型字面值为int）到 byte/short/char 也是自动完成的，虽然它们都比int 小。在自动类型转化中，除了以下几种情况可能会导致精度损失以外，其他的转换都不能出现精度损失。

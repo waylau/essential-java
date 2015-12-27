@@ -8,6 +8,8 @@ This is the summary of my book.
 * [语言基础](docs/basics.md)
 	* [变量](docs/variables.md)
 	* [运算符](docs/operators.md)
+	* [表达式、语句和块](docs/expressions.md)
+	* [控制流程语句](docs/control-flow.md)
 * [关键字](docs/keywords.md)
 * [IO](docs/io.md)
 * [多线程](docs/multithreading.md)
