@@ -12,6 +12,7 @@ This is the summary of my book.
 	* [控制流程语句](docs/control-flow.md)
 * [类和对象](docs/classes-and-objects.md)
 * [注解](docs/annotations.md)
+* [泛型](docs/generics.md)
 * [关键字](docs/keywords.md)
 * [IO](docs/io.md)
 * [多线程](docs/multithreading.md)
