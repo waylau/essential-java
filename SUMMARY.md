@@ -11,6 +11,7 @@ This is the summary of my book.
 	* [表达式、语句和块](docs/expressions.md)
 	* [控制流程语句](docs/control-flow.md)
 * [类和对象](docs/classes-and-objects.md)
+* [注解](docs/annotations.md)
 * [关键字](docs/keywords.md)
 * [IO](docs/io.md)
 * [多线程](docs/multithreading.md)
