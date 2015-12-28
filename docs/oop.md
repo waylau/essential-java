@@ -351,3 +351,8 @@ class MountainBike extends Bicycle {
 3. 接口性（interface-ability）。多态是超类通过方法签名，向子类提供了一个共同接口，由子类来完善或者覆盖它而实现的。图中超类 Shape 规定了两个实现多态的接口方法，computeArea() 以及 computeVolume()。子类，如 Circle 和 Sphere 为了实现多态，完善或者覆盖这两个接口方法。
 4. 灵活性（flexibility）。它在应用中体现了灵活多样的操作，提高了使用效率。
 5. 简化性（simplicity）。多态简化对应用软件的代码编写和修改过程，尤其在处理大量对象的运算和操作时，这个特点尤为突出和重要。
+
+
+## 源码
+
+本章例子的源码，可以在 `com.waylau.essentialjava.object` 包下找到。

@@ -90,3 +90,6 @@ class BlockDemo {
 }
 ```
 
+## 源码
+
+本章例子的源码，可以在 `com.waylau.essentialjava.expression` 包下找到。
