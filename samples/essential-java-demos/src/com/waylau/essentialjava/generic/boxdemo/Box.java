@@ -8,12 +8,13 @@ package com.waylau.essentialjava.generic.boxdemo;
  * @date 2015年12月29日
  */
 public class Box {
+	private Object object;
 
-	/**
-	 * 
-	 */
-	public Box() {
-		// TODO Auto-generated constructor stub
+	public void set(Object object) {
+		this.object = object;
 	}
 
+	public Object get() {
+		return object;
+	}
 }
