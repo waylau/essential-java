@@ -464,9 +464,83 @@ public class Password {
 * 用空格覆盖旧的密码。
 
 
-## Data Streams
+## 数据流（Data Streams）
 
 Data Streams 处理原始数据类型和字符串值的二进制 I/O。
+
+支持基本数据类型的值（(boolean, char, byte, short, int, long, float, 和 double）以及字符串值的二进制 I/O。所有数据流实现 [DataInput](https://docs.oracle.com/javase/8/docs/api/java/io/DataInput.html) 或 [DataOutput](https://docs.oracle.com/javase/8/docs/api/java/io/DataOutput.html) 接口。本节重点介绍这些接口的广泛使用的实现，[DataInputStream](https://docs.oracle.com/javase/8/docs/api/java/io/DataInputStream.html) 和 [DataOutputStream](https://docs.oracle.com/javase/8/docs/api/java/io/DataOutputStream.html) 类。
+
+DataStreams 例子展示了数据流通过写出的一组数据记录到文件，然后再次从文件中读取这些记录。每个记录包括涉及在发票上的项目，如下表中三个值：
+
+
+记录中顺序 | 数据类型 | 数据描述 | 输出方法 | 输入方法 | 示例值
+---- | ---- | ---- | ---- | ---- | ----
+1	| double	| Item price |	DataOutputStream.writeDouble |	DataInputStream.readDouble | 19.99
+2	| int	| Unit count	| DataOutputStream.writeInt | 	DataInputStream.readInt	| 12
+3	| String	| Item description	| DataOutputStream.writeUTF|	DataInputStream.readUTF	| "Java T-Shirt"
+
+
+首先，定义了几个常量，数据文件的名称，以及数据。
+
+    static final String dataFile = "invoicedata";
+    
+    static final double[] prices = { 19.99, 9.99, 15.99, 3.99, 4.99 };
+    static final int[] units = { 12, 8, 13, 29, 50 };
+    static final String[] descs = {
+        "Java T-shirt",
+        "Java Mug",
+        "Duke Juggling Dolls",
+        "Java Pin",
+        "Java Key Chain"
+    };
+    
+    
+DataStreams  打开一个输出流，提供一个缓冲的文件输出字节流：
+
+    out = new DataOutputStream(new BufferedOutputStream(
+                  new FileOutputStream(dataFile)))
+                  
+DataStreams 写出记录并关闭输出流：
+
+    for (int i = 0; i < prices.length; i ++) {
+        out.writeDouble(prices[i]);
+        out.writeInt(units[i]);
+        out.writeUTF(descs[i]);
+    }
+    
+该 writeUTF 方法写出以 UTF-8 改进形式的字符串值。
+
+现在，DataStreams 读回数据。首先，它必须提供一个输入流，和变量来保存的输入数据。像 DataOutputStream 、DataInputStream 类，必须构造成一个字节流的包装器。
+
+    in = new DataInputStream(new
+                BufferedInputStream(new FileInputStream(dataFile)));
+    
+    double price;
+    int unit;
+    String desc;
+    double total = 0.0;
+    
+现在，DataStreams 可以读取流里面的每个记录，并在遇到它时将数据报告出来：
+
+    try {
+        while (true) {
+            price = in.readDouble();
+            unit = in.readInt();
+            desc = in.readUTF();
+            System.out.format("You ordered %d" + " units of %s at $%.2f%n",
+                unit, desc, price);
+            total += unit * price;
+        }
+    } catch (EOFException e) {
+    }
+    
+请注意，DataStreams 通过捕获 EOFException 检测文件结束的条件而不是测试无效的返回值。所有实现了 DataInput  的方法都使用 EOFException 类来代替返回值。
+
+还要注意的是 DataStreams 中的各个 write 需要匹配对应相应的 read。它需要由程序员来保证。
+
+DataStreams 使用了一个非常糟糕的编程技术：它使用浮点数来表示的货币价值。在一般情况下，浮点数是不好的精确数值。这对小数尤其糟糕，因为共同值（如 0.1），没有一个二进制的表示。
+
+正确的类型用于货币值是 [java.math.BigDecimal](https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html) 的。不幸的是，BigDecimal 是一个对象的类型，因此它不能与数据流工作。然而，BigDecimal 将与对象流工作，而这部分内容将在下一节讲解。
 
 ## 对象流（Object Streams） 
 
