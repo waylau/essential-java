@@ -643,3 +643,7 @@ writeObject 和 readObject 方法简单易用，但它们包含了一些非常�
 ob1 和 ob2 都是相同对象的引用。
 
 然而，如果一个单独的对象被写入到两个不同的数据流，它被有效地复用 - 一个程序从两个流读回的将是两个不同的对象。
+
+## 源码
+
+本章例子的源码，可以在 <https://github.com/waylau/essential-java> 中 `com.waylau.essentialjava.io` 包下找到。
