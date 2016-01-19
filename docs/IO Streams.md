@@ -545,3 +545,101 @@ DataStreams 使用了一个非常糟糕的编程技术：它使用浮点数来�
 ## 对象流（Object Streams） 
 
 对象流处理对象的二进制 I/O。
+
+正如数据流支持的是基本数据类型的 I/O，对象流支持的对象 I/O。大多数，但不是全部，标准类支持他们的对象的序列化，都需要实现 [Serializable](https://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html) 接口。
+
+对象流类包括 [ObjectInputStream](https://docs.oracle.com/javase/8/docs/api/java/io/ObjectInputStream.html) 和 [ObjectOutputStream](https://docs.oracle.com/javase/8/docs/api/java/io/ObjectOutputStream.html) 的。这些类实现的 [ObjectInput](https://docs.oracle.com/javase/8/docs/api/java/io/ObjectInput.html) 与 [ObjectOutput](https://docs.oracle.com/javase/8/docs/api/java/io/ObjectOutput.html) 的，这些都是 DataInput 和DataOutput 的子接口。这意味着，所有包含在数据流中的基本数据类型 I/O 方法也在对象流中实现了。这样一个对象流可以包含基本数据类型值和对象值的混合。该ObjectStreams 例子说明了这一点。ObjectStreams 创建与 DataStreams 相同的应用程序。首先，价格现在是 [BigDecimal](https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html) 对象，以更好地代表分数值。其次，[Calendar](https://docs.oracle.com/javase/8/docs/api/java/util/Calendar.html) 对象被写入到数据文件中，指示发票日期。
+
+```java
+public class ObjectStreams {
+    static final String dataFile = "invoicedata";
+
+    static final BigDecimal[] prices = { 
+        new BigDecimal("19.99"), 
+        new BigDecimal("9.99"),
+        new BigDecimal("15.99"),
+        new BigDecimal("3.99"),
+        new BigDecimal("4.99") };
+    static final int[] units = { 12, 8, 13, 29, 50 };
+    static final String[] descs = { "Java T-shirt",
+            "Java Mug",
+            "Duke Juggling Dolls",
+            "Java Pin",
+            "Java Key Chain" };
+
+    public static void main(String[] args) 
+        throws IOException, ClassNotFoundException {
+
+ 
+        ObjectOutputStream out = null;
+        try {
+            out = new ObjectOutputStream(new
+                    BufferedOutputStream(new FileOutputStream(dataFile)));
+
+            out.writeObject(Calendar.getInstance());
+            for (int i = 0; i < prices.length; i ++) {
+                out.writeObject(prices[i]);
+                out.writeInt(units[i]);
+                out.writeUTF(descs[i]);
+            }
+        } finally {
+            out.close();
+        }
+
+        ObjectInputStream in = null;
+        try {
+            in = new ObjectInputStream(new
+                    BufferedInputStream(new FileInputStream(dataFile)));
+
+            Calendar date = null;
+            BigDecimal price;
+            int unit;
+            String desc;
+            BigDecimal total = new BigDecimal(0);
+
+            date = (Calendar) in.readObject();
+
+            System.out.format ("On %tA, %<tB %<te, %<tY:%n", date);
+
+            try {
+                while (true) {
+                    price = (BigDecimal) in.readObject();
+                    unit = in.readInt();
+                    desc = in.readUTF();
+                    System.out.format("You ordered %d units of %s at $%.2f%n",
+                            unit, desc, price);
+                    total = total.add(price.multiply(new BigDecimal(unit)));
+                }
+            } catch (EOFException e) {}
+            System.out.format("For a TOTAL of: $%.2f%n", total);
+        } finally {
+            in.close();
+        }
+    }
+}
+```
+
+如果的 readObject() 不返回预期的对象类型，试图将它转换为正确的类型可能会抛出一个 [ClassNotFoundException](https://docs.oracle.com/javase/8/docs/api/java/lang/ClassNotFoundException.html)。在这个简单的例子，这是不可能发生的，所以我们不要试图捕获异常。相反，我们通知编译器，我们已经意识到这个问题，添加 ClassNotFoundException 到主方法的 throws 子句中的。
+
+### 复杂对象的 I/O
+
+writeObject 和 readObject 方法简单易用，但它们包含了一些非常复杂的对象管理逻辑。这不像 Calendar 类，它只是封装了原始值。但许多对象包含其他对象的引用。如果 readObject 从流重构一个对象，它必须能够重建所有的原始对象所引用的对象。这些额外的对象可能有他们自己的引用，依此类推。在这种情况下，writeObject 遍历对象引用的整个网络，并将该网络中的所有对象写入流。因此，writeObject 单个调用可以导致大量的对象被写入流。
+
+如下图所示，其中 writeObject 调用名为 a 的单个对象。这个对象包含对象的引用 b和 c，而 b 包含引用 d 和 e。调用 writeObject(a) 写入的不只是一个 a，还包括所有需要重新构成的这个网络中的其他4个对象。当通过 readObject 读回 a 时，其他四个对象也被读回，同时，所有的原始对象的引用被保留。
+
+![](../images/io/io-trav.gif)
+
+如果在同一个流的两个对象引用了同一个对象会发生什么？流只包含一个对象的一个拷贝，尽管它可以包含任何数量的对它的引用。因此，如果你明确地写一个对象到流两次，实际上只是写入了2此引用。例如，如果下面的代码写入一个对象 ob 两次到流：
+
+    Object ob = new Object();
+    out.writeObject(ob);
+    out.writeObject(ob);
+    
+每个 writeObject 都对应一个 readObject， 所以从流里面读回的代码如下：
+
+    Object ob1 = in.readObject();
+    Object ob2 = in.readObject();
+
+ob1 和 ob2 都是相同对象的引用。
+
+然而，如果一个单独的对象被写入到两个不同的数据流，它被有效地复用 - 一个程序从两个流读回的将是两个不同的对象。
