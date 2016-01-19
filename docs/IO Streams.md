@@ -362,7 +362,7 @@ public class Format {
 
 附加元素都是可选的。下图显示了长格式符是如何分解成元素
 
-![](.../images/io/io-spec.gif)
+![](../images/io/io-spec.gif)
 
 元件必须出现在显示的顺序。从合适的工作，可选的元素是：
 
