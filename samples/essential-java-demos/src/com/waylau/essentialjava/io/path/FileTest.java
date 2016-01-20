@@ -39,5 +39,4 @@ public class FileTest {
         // instance returns expected values.
         Path fullPath = inputPath.toAbsolutePath();
 	}
-
 }
