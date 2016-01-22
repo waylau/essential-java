@@ -365,5 +365,5 @@ class AtomicCounter {
 
 你只需调用 ThreadLocalRandom.current()， 然后调用它的其中一个方法去获取一个随机数即可。下面是一个例子：
 
-    int r = ThreadLocalRandom.current() .nextInt(4, 77);
+    int r = ThreadLocalRandom.current().nextInt(4, 77);
     
