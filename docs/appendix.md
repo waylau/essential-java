@@ -2,7 +2,7 @@
 
 ## 参考引用
 
-* [Core Java Tenth Edition](http://www.amazon.com/Core-Java-I--Fundamentals-10th/dp/0134177304/ref=sr_1_1?s=books&ie=UTF8&qid=1451135456&sr=1-1&keywords=Core+Java)
+* [Core Java Tenth Edition](http://www.amazon.com/Core-Java-I--Fundamentals-10th/dp/0134177304)
 * [Thinking in Java Fourth Edition](http://mindview.net/Books/TIJ4)
-* The Well-Grounded Java Developer
-* <http://docs.oracle.com/javase/tutorial/index.html>
+* [The Well-Grounded Java Developer](http://www.amazon.com/The-Well-Grounded-Java-Developer-programming/dp/1617290068)
+* [The Java Tutorial, Sixth Edition](http://www.amazon.com/The-Java-Tutorial-Course-Edition/dp/0134034082)
