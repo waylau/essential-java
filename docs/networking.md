@@ -10,4 +10,8 @@
 
 ## TCP
 
-TCP (Transmission Control Protocol) 是基于连接的提供两个主机间可靠的数据流
+TCP (Transmission Control Protocol) 是基于连接的提供两个主机间可靠的数据流(flow of data)
+
+## UDP
+
+UDP (User Datagram Protocol) 不是基于连接的，主机发送独立的数据包（datagram）给其他主机，不保证数据到达。
