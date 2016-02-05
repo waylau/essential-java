@@ -7,3 +7,4 @@
 * [The Well-Grounded Java Developer](http://www.amazon.com/The-Well-Grounded-Java-Developer-programming/dp/1617290068)
 * [The Java Tutorial, Sixth Edition](http://www.amazon.com/The-Java-Tutorial-Course-Edition/dp/0134034082)
 * TCP/IP ILLustrated Volume 1: The Protocols
+* [Java Network Programming, 4th Edition](http://my.safaribooksonline.com/book/programming/java/9781449365936)

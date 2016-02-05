@@ -4,7 +4,9 @@
 
 ![](../images/net/1netw.gif)
 
-编写 Java 应用，我们只需关注于应用层 （application layer），而不用关心 TCP 和 UDP 所在的传输层。java.net 包含了你编程所需的类，这些类是与操作系统无关的。比如 URL, URLConnection, Socket, 和 ServerSocket 类是使用 TCP 连接网络的， DatagramPacket, DatagramSocket, 和 MulticastSocket 类是用于  UDP  的。
+编写 Java 应用，我们只需关注于应用层 （application layer），而不用关心 TCP 和 UDP 所在的传输层是如何实现的。java.net 包含了你编程所需的类，这些类是与操作系统无关的。比如 URL, URLConnection, Socket, 和 ServerSocket 类是使用 TCP 连接网络的， DatagramPacket, DatagramSocket, 和 MulticastSocket 类是用于  UDP  的。
+
+Java 支持的协议只有  TCP 和 UDP ，以及在建立在  TCP 和 UDP 之上其他应用层协议。所有其他传输层、网际层和更底层的协议，如 ICMP、IGMP、ARP、RARP、RSVP 和其他协议 在 Java 中只能链接到原生代码来实现。
 
 ## TCP
 
@@ -62,4 +64,4 @@ TCP 和 UDP 协议使用的端口来将接收到的数据映射到一个计算�
 
 ![](../images/net/3tcpudp.gif)
 
-端口号取值范围是从 0 到 65535 （因为是 16-bit 长度数字），其中范围从 0 到1023 是受限的;它们是被知名的服务，例如 HTTP 和 FTP 等系统服务所保留使用。这些端口被称为众所周知的端口（well-known ports）。您的应用程序不应该试图绑定到他们。
+端口号取值范围是从 0 到 65535 （因为是 16-bit 长度数字），其中范围从 0 到1023 是受限的，它们是被知名的服务所保留使用，例如 HTTP （端口是 80）和 FTP （端口是20、21）等系统服务。这些端口被称为众所周知的端口（well-known ports）。您的应用程序不应该试图绑定到他们。[Service Name and Transport Protocol Port Number Registry](http://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml)提供了各种常用的已经分配的端口号列表

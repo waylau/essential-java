@@ -10,18 +10,13 @@ Socket（套接字）：是在网络上运行两个程序之间的双向通信�
 
 ![](../images/net/5connect.gif)
 
-客户端的连接请求
-
 如果一切顺利的话，服务器接受连接。一旦接受，服务器获取绑定到相同的本地端口的新 socket ，并且还具有其远程端点设定为客户端的地址和端口。它需要一个新的socket，以便它可以继续监听原来用于客户端连接请求的 socket 。
 
-![](../images/net6connect.gif)
-
-在连接建立
+![](../images/net/6connect.gif)
 
 在客户端，如果连接被接受，则成功地创建一个套接字和客户端可以使用该 socket 与服务器进行通信。
 
 客户机和服务器现在可以通过 socket 写入或读取来交互了。
-
 
 端点是IP地址和端口号的组合。每个 TCP 连接可以通过它的两个端点被唯一标识。这样，你的主机和服务器之间可以有多个连接。
 
@@ -29,7 +24,7 @@ java.net 包中提供了一个类 Socket，实现您的 Java 程序和网络上�
 
 此外，java.net 包含了 ServerSocket 类，它实现了服务器的 socket 可以侦监听和接受客户端的连接。下文将展示如何使用 Socket 和 ServerSocket 类。
 
-## 从 Socket 读、写
+## 实现一个 echo 服务器
 
 让我们来看看这个例子，程序可以建立使用 Socket 类连接到服务器程序，客户端可以通过 socket 向服务器发送数据和接收数据。
 
@@ -117,13 +112,13 @@ public class EchoServer {
 }
 ```
 
-首先启动服务器，在命令行输入如下，设定一个端口号，比如 4444：
+首先启动服务器，在命令行输入如下，设定一个端口号，比如 7（Echo 协议指定端口是 7）：
 
-    java EchoServer 4447
+    java EchoServer 7
     
 而后启动客户端，echoserver.example.com  是你主机的名称，如果是本机的话，主机名称可以是 localhost
 
-    java EchoClient echoserver.example.com 4444
+    java EchoClient echoserver.example.com 7
     
 输出效果如下：
 
@@ -133,3 +128,5 @@ public class EchoServer {
     echo: 我很好哦
     要过年了，www.waylau.com 祝你 猴年大吉，身体健康哦！
     echo: 要过年了，www.waylau.com 祝你 猴年大吉，身体健康哦！
+
+## 实现一个聊天室
