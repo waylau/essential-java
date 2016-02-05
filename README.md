@@ -24,7 +24,7 @@ There is also a GitBook version of this book: <http://waylau.gitbooks.io/essenti
 
 ### Issue 意见、建议
 
-如有勘误、意见或建议欢迎拍砖 <https://github.com/waylau/essential-java>/issues>
+如有勘误、意见或建议欢迎拍砖 <https://github.com/waylau/essential-java/issues>
 
 ### Contact 联系作者:
 
