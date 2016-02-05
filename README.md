@@ -1,6 +1,6 @@
 # Essential Java.《Java 编程要点》
 
-![](netty_logo.jpg)
+![](java_logo.jpg)
 
 Essential Java, is a book about the Essentials of Java Programming.
 
