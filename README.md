@@ -20,7 +20,7 @@ There is also a GitBook version of this book: <http://waylau.gitbooks.io/essenti
 
 ### Code 源码
 
-书中所有示例源码，移步至<https://github.com/waylau/essential-java>的 `samples` 目录下,代码遵循《[Java 编码规范](<https://github.com/waylau/java-code-conventions>)》
+书中所有示例源码，移步至<https://github.com/waylau/essential-java>的 `samples` 目录下,代码遵循《[Java 编码规范](<http://waylau.com/java-code-conventions>)》
 
 ### Issue 意见、建议
 
@@ -28,4 +28,8 @@ There is also a GitBook version of this book: <http://waylau.gitbooks.io/essenti
 
 ### Contact 联系作者:
 
-* [www.waylau.com](http://www.waylau.com)
+* Blog: [waylau.com](http://waylau.com)
+* Gmail: [waylau521(at)gmail.com](mailto:waylau521@gmail.com)
+* Weibo: [waylau521](http://weibo.com/waylau521)
+* Twitter: [waylau521](https://twitter.com/waylau521)
+* Github : [waylau](https://github.com/waylau)
