@@ -105,7 +105,7 @@ CopyCharacters 与 CopyBytes 是非常相似的。最重要的区别在于 CopyC
 
 字符流往往是对字节流的“包装”。字符流使用字节流来执行物理I/O，同时字符流处理字符和字节之间的转换。例如，FileReader 使用 FileInputStream，而 FileWriter使用的是 FileOutputStream。
 
-有两种通用的字节到字符的“桥梁”流：InputStreamReader 和 OutputStreamWriter。当没有预包装的字符流类时，使用它们来创建字符流。在 [socket](http://docs.oracle.com/javase/tutorial/networking/sockets/readingWriting.html) 章节中将展示该用法。
+有两种通用的字节到字符的“桥梁”流：InputStreamReader 和 OutputStreamWriter。当没有预包装的字符流类时，使用它们来创建字符流。在 [socket](socket.md) 章节中将展示该用法。
 
 ### 面向行的 I/O
 
