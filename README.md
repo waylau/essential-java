@@ -15,7 +15,7 @@ There is also a GitBook version of this book: <http://waylau.gitbooks.io/essenti
 
 选择下面入口之一：
 
-* <https://github.com/waylau/essential-java> 的 [SUMMARY.md](SUMMARY.md)
+* <https://github.com/waylau/essential-java> 的 [SUMMARY.md](https://github.com/waylau/essential-java/blob/master/SUMMARY.md)
 * <http://waylau.gitbooks.io/essential-java> 的 Read 按钮
 
 ### Code 源码
