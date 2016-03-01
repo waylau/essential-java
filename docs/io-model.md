@@ -24,7 +24,7 @@
 同步 I/O 和异步 I/O 的区别就在于第二个步骤是否阻塞，如果实际的 I/O 读写阻塞请求进程，那么就是同步 I/O 。 
 
 
-## UNIX I/O 模型
+## Unix I/O 模型
  
 Unix 下共有五种 I/O 模型： 
 
@@ -377,4 +377,4 @@ public class AsyncEchoServer {
 
 ## 源码
 
-本章例子的源码，可以在 <https://github.com/waylau/essential-java> 中 com.waylau.essentialjava.net 包下找到。
+本章例子的源码，可以在 <https://github.com/waylau/essential-java> 中 `com.waylau.essentialjava.net.echo` 包下找到。
