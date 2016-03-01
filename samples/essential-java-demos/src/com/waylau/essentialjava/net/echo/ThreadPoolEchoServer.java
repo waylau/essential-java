@@ -15,17 +15,20 @@ import java.util.concurrent.Executors;
  * @date 2016年3月1日
  */
 public class ThreadPoolEchoServer {
+	public static int DEFAULT_PORT = 7;
+
 	public static void main(String[] args) throws IOException {
 
-		if (args.length != 1) {
-			System.err.println("Usage: java EchoServer <port number>");
-			System.exit(1);
-		}
+		int port;
 
-		int portNumber = Integer.parseInt(args[0]);
+		try {
+			port = Integer.parseInt(args[0]);
+		} catch (RuntimeException ex) {
+			port = DEFAULT_PORT;
+		}
 		ExecutorService threadPool = Executors.newFixedThreadPool(5);
 		Socket clientSocket = null;
-		try (ServerSocket serverSocket = new ServerSocket(portNumber);) {
+		try (ServerSocket serverSocket = new ServerSocket(port);) {
 			while (true) {
 				clientSocket = serverSocket.accept();
 				
@@ -34,7 +37,7 @@ public class ThreadPoolEchoServer {
 			}
 		} catch (IOException e) {
 			System.out.println(
-					"Exception caught when trying to listen on port " + portNumber + " or listening for a connection");
+					"Exception caught when trying to listen on port " + port + " or listening for a connection");
 			System.out.println(e.getMessage());
 		}
 	}
