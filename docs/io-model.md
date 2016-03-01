@@ -99,7 +99,42 @@ I/O 多路复用模型使用了 Reactor 设计模式实现了这一机制。
 
 ## “阻塞I/O”模式  
 
-在上一节 Socket 章节中的 EchoServer 就是一个简单的阻塞I/O 例子，服务器启动后，等待客户端连接。在客户端连接服务器后，服务器就阻塞读写取数据流。
+在上一节 Socket 章节中的 EchoServer 就是一个简单的阻塞 I/O 例子，服务器启动后，等待客户端连接。在客户端连接服务器后，服务器就阻塞读写取数据流。
+
+EchoServer 代码：
+
+```java
+public class EchoServer {
+    public static void main(String[] args) throws IOException {
+        
+        if (args.length != 1) {
+            System.err.println("Usage: java EchoServer <port number>");
+            System.exit(1);
+        }
+        
+        int portNumber = Integer.parseInt(args[0]);
+        
+        try (
+            ServerSocket serverSocket =
+                new ServerSocket(Integer.parseInt(args[0]));
+            Socket clientSocket = serverSocket.accept();     
+            PrintWriter out =
+                new PrintWriter(clientSocket.getOutputStream(), true);                   
+            BufferedReader in = new BufferedReader(
+                new InputStreamReader(clientSocket.getInputStream()));
+        ) {
+            String inputLine;
+            while ((inputLine = in.readLine()) != null) {
+                out.println(inputLine);
+            }
+        } catch (IOException e) {
+            System.out.println("Exception caught when trying to listen on port "
+                + portNumber + " or listening for a connection");
+            System.out.println(e.getMessage());
+        }
+    }
+}
+```
 
 ## 改进为“阻塞I/O+多线程”模式  
 
