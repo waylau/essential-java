@@ -14,6 +14,10 @@ import javax.imageio.ImageIO;
  * @date 2016年1月22日
  */
 public class ForkBlur extends RecursiveAction {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int[] mSource;
 	private int mStart;
 	private int mLength;

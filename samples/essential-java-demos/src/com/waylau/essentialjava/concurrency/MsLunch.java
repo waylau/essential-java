@@ -8,8 +8,10 @@ package com.waylau.essentialjava.concurrency;
  * @date 2016年1月21日
  */
 public class MsLunch {
+	@SuppressWarnings("unused")
 	private long c1 = 0;
-    private long c2 = 0;
+    @SuppressWarnings("unused")
+	private long c2 = 0;
     private Object lock1 = new Object();
     private Object lock2 = new Object();
 
