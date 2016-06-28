@@ -31,7 +31,7 @@
 
 ### 定义和启动一个线程
 
-有两种方式穿件 Thread 的实例：
+Java 中有两种方式创建 Thread 的实例：
 
 * 提供 Runnable 对象。Runnable  接口定义了一个方法 run ,用来包含线程要执行的代码。如 HelloRunnable 所示：
 
@@ -75,13 +75,13 @@ public class HelloThread extends Thread {
 
 第一种方式,它使用 Runnable 对象,在实际应用中更普遍,因为 Runnable 对象可以继承 Thread 以外的类。第二种方式，在简单的应用程序更容易使用,但受限于你的任务类必须是一个 Thread 的后代。本书推荐使用第一种方法,将 Runnable 任务从 Thread 对象分离来执行任务。这不仅更灵活,而且它适用于高级线程管理 API。
 
-Thread 类定义了大量的方法用于线程管理。
+Thread 类还定义了大量的方法用于线程管理。
 
 ### Sleep 来暂停执行
 
-Thread.sleep 可以当前线程执行暂停一个时间段，这样处理器时间就可以给其他线程使用。
+Thread.sleep 可以让当前线程执行暂停一个时间段，这样处理器时间就可以给其他线程使用。
 
-sleep 有两种重载形式：一个是指定睡眠时间到毫秒，另外一个是指定的睡眠时间为纳秒级。然而，这些睡眠时间不能保证是精确的，因为它们是通过由基础 OS 提供的，并受其限制。此外，睡眠周期也可以通过中断终止，我们将在后面的章节中看到。在任何情况下，你不能假设调用 sleep 会挂起线程用于指定精确的时间段。
+sleep 有两种重载形式：一个是指定睡眠时间为毫秒，另外一个是指定睡眠时间为纳秒级。然而，这些睡眠时间不能保证是精确的，因为它们是通过由操作系统来提供的，并受其限制，因而不能假设 sleep 的睡眠时间是精确的。此外，睡眠周期也可以通过中断终止，我们将在后面的章节中看到。
 
 SleepMessages 示例使用 sleep 每隔4秒打印一次消息：
 
@@ -96,8 +96,10 @@ public class SleepMessages {
 				"A kid will eat ivy too" };
 
 		for (int i = 0; i < importantInfo.length; i++) {
+		
 			// Pause for 4 seconds
 			Thread.sleep(4000);
+			
 			// Print a message
 			System.out.println(importantInfo[i]);
 		}
@@ -109,31 +111,37 @@ public class SleepMessages {
 
 ### 中断（interrupt）
 
-中断是表明一个线程，它应该停止它正在做和将要做事的时。线程通过在 Thread 对象调用 [interrupt](https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html#interrupt--) 来实现线程的中断。为了中断机制能正常工作，被中断的线程必须支持自己的中断。
+中断是表明一个线程，它应该停止它正在做和将要做的事。线程通过在 Thread 对象调用 [interrupt](https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html#interrupt--) 来实现线程的中断。为了中断机制能正常工作，被中断的线程必须支持自己的中断。
 
 #### 支持中断
 
-如何实现线程支持自己的中断？这要看是什么它目前正在做。如果线程频繁调用抛出InterruptedException 的方法，它只要在  run 方法捕获了异常之后返回即可。例如 ：
+如何实现线程支持自己的中断？这要看是它目前正在做什么。如果线程调用方法频繁抛出 InterruptedException 异常，那么它只要在 run 方法捕获了异常之后返回即可。例如 ：
 
     for (int i = 0; i < importantInfo.length; i++) {
+    
         // Pause for 4 seconds
         try {
             Thread.sleep(4000);
         } catch (InterruptedException e) {
+        
             // We've been interrupted: no more messages.
             return;
         }
+        
         // Print a message
         System.out.println(importantInfo[i]);
     }
 
 很多方法都会抛出 InterruptedException，如 sleep，被设计成在收到中断时立即取消他们当前的操作并返回。
 
-若线程长时间没有调用方法抛出 InterruptedException 的话，那么它必须定期调用 Thread.interrupted ，在接收到中断后返回 true。
+若线程长时间没有调用方法抛出 InterruptedException 的话，那么它必须定期调用 Thread.interrupted ，该方法在接收到中断后将返回 true。
 
     for (int i = 0; i < inputs.length; i++) {
+    
         heavyCrunch(inputs[i]);
+        
         if (Thread.interrupted()) {
+        
             // We've been interrupted: no more crunching.
             return;
         }
@@ -147,28 +155,29 @@ public class SleepMessages {
     
 #### 中断状态标志
 
-中断机制是使用被称为中断状态的内部标志实现的。调用 Thread.interrupt 可以设置该标志。当一个线程通过调用静态方法 Thread.interrupted 检查中断，中断状态被清除。非静态 isInterrupted 方法，它是用于线程来查询另一个线程的中断状态，不会改变中断状态标志。
+中断机制是使用被称为中断状态的内部标志实现的。调用 Thread.interrupt 可以设置该标志。当一个线程通过调用静态方法 Thread.interrupted 来检查中断，中断状态被清除。非静态 isInterrupted 方法，它是用于线程来查询另一个线程的中断状态，而不会改变中断状态标志。
 
-按照惯例，任何方法因抛出一个 InterruptedException 退出都会清除中断状态。当然，它可能因为另一个线程调用 interrupt 而让那个中断状态立即被重新设置。
+按照惯例，任何方法因抛出一个 InterruptedException 而退出都会清除中断状态。当然，它可能因为另一个线程调用 interrupt 而让那个中断状态立即被重新设置回来。
 
 ### join 方法
 
-join 方法允许一个线程等待另一个完成。假设 t 是一个 Thread 对象，
+join 方法允许一个线程等待另一个完成。假设 t 是一个正在执行的 Thread 对象，那么
 
     t.join();
 
-它会导致当前线程暂停执行直到 t 线程终止。join 允许程序员指定一个等待周期。与 sleep 一样，等待时间是依赖于操作系统的时间，不能假设 join 等待时间是精确的。
+它会导致当前线程暂停执行直到 t 线程终止。join 允许程序员指定一个等待周期。与 sleep 一样，等待时间是依赖于操作系统的时间，同时不能假设 join 等待时间是精确的。
 
-像 sleep 一样，join 响应中断并通过 InterruptedException 退出。
+像 sleep 一样，join 并通过 InterruptedException 退出来响应中断。
 
 ### SimpleThreads 示例
 
-SimpleThreads 示例，有两个线程，第一个线程是每个 Java 应用程序都有主线程。主线程创建的 Runnable 对象 MessageLoop，并等待它完成。如果  MessageLoop 需要很长时间才能完成，主线程就中断它。
+SimpleThreads 示例由两个线程。第一个线程是每个 Java 应用程序都有的主线程。主线程创建的 Runnable 对象 MessageLoop，并等待它完成。如果  MessageLoop 需要很长时间才能完成，主线程就中断它。
 
 该 MessageLoop 线程打印出一系列消息。如果中断之前就已经打印了所有消息，则 MessageLoop 线程打印一条消息并退出。
 
 ```java
 public class SimpleThreads {
+
 	  // Display a message, preceded by
     // the name of the current thread
     static void threadMessage(String message) {
@@ -189,11 +198,11 @@ public class SimpleThreads {
                 "A kid will eat ivy too"
             };
             try {
-                for (int i = 0;
-                     i < importantInfo.length;
-                     i++) {
+                for (int i = 0; i < importantInfo.length; i++) {
+                
                     // Pause for 4 seconds
                     Thread.sleep(4000);
+                    
                     // Print a message
                     threadMessage(importantInfo[i]);
                 }
@@ -229,18 +238,22 @@ public class SimpleThreads {
         t.start();
 
         threadMessage("Waiting for MessageLoop thread to finish");
+        
         // loop until MessageLoop
         // thread exits
         while (t.isAlive()) {
             threadMessage("Still waiting...");
+            
             // Wait maximum of 1 second
             // for MessageLoop thread
             // to finish.
+            
             t.join(1000);
             if (((System.currentTimeMillis() - startTime) > patience)
                   && t.isAlive()) {
                 threadMessage("Tired of waiting!");
                 t.interrupt();
+                
                 // Shouldn't be long now
                 // -- wait indefinitely
                 t.join();
