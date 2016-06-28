@@ -14,6 +14,7 @@ public class FileTest {
 	/**
 	 * @param args
 	 */
+	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 
         if (args.length < 1) {

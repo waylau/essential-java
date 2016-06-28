@@ -41,11 +41,13 @@ export PATH=usr/local/java/jdk1.8.0_66:$PATH
 
 ### Windows
 
-把安装目录下的 `C:\Program Files\Java\jdk1.8.0_66\bin` 设置为 `PATH` 的环境变量。比如：
+增加一个 `JAVA_HOME` 环境变量，值是 JDK 的安装目录。如 `C:\Program Files\Java\jdk1.8.0_66\bin` ，注意后边不带分号
 
-```
-C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\Java\jdk1.8.0_66\bin
-```
+在 `PATH` 的环境变量里面增加 `%JAVA_HOME%\bin;` 
+
+在 `CLASSPATH`增加`.;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar;`（前面有点号和分号，后边结尾也有分号。
+或者可以写成`.;%JAVA_HOME%\lib`如图所示，一样的效果。
+ 
 
 ## 测试
 
