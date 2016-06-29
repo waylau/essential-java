@@ -64,4 +64,4 @@ TCP 和 UDP 协议使用的端口来将接收到的数据映射到一个计算�
 
 ![](../images/net/3tcpudp.gif)
 
-端口号取值范围是从 0 到 65535 （因为是 16-bit 长度数字），其中范围从 0 到1023 是受限的，它们是被知名的服务所保留使用，例如 HTTP （端口是 80）和 FTP （端口是20、21）等系统服务。这些端口被称为众所周知的端口（well-known ports）。您的应用程序不应该试图绑定到他们。[Service Name and Transport Protocol Port Number Registry](http://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml)提供了各种常用的已经分配的端口号列表
+端口号取值范围是从 0 到 65535 （16-bit 长度），其中范围从 0 到 1023 是受限的，它们是被知名的服务所保留使用，例如 HTTP （端口是 80）和 FTP （端口是20、21）等系统服务。这些端口被称为众所周知的端口（well-known ports）。您的应用程序不应该试图绑定到他们。你可以访问 <http://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml> 来查询各种常用的已经分配的端口号列表。
