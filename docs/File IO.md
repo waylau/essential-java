@@ -162,7 +162,7 @@ normalize 方法是删除任何多余的元素，其中包括任何 出现的“
     // Result is file:///home/logfile
     System.out.format("%s%n", p1.toUri());
    
-[toAbsolutePath](https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html#toAbsolutePath--) 方法将路径转为相对路径。如果传递的路径已是绝对的，则返回同一Path 对象。toAbsolutePath 方法可以非常有助于处理用户输入的文件名。例如
+[toAbsolutePath](https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html#toAbsolutePath--) 方法将路径转为绝对路径。如果传递的路径已是绝对的，则返回同一Path 对象。toAbsolutePath 方法可以非常有助于处理用户输入的文件名。例如
 
 ```java
 public class FileTest {
