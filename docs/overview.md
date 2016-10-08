@@ -9,7 +9,7 @@ Java 编程语言是一个比较高层次的语言，在机器表示的细节是
 其他让你选择 Java 的理由还包括：
 
 * 丰富的开发工具：有很多开发工具可以让你快速开始 Java 编程之旅，比如 [Eclipse](https://eclipse.org/)、[IntelliJ](https://www.jetbrains.com/idea/) 和 [Netbeans](https://netbeans.org/)
-* 庞大的社区： 在世界各地估计有[超过 9 亿的 Java 开发人员](https://plumbr.eu/blog/java/how-many-java-developers-in-the-world)。这个数字意味着 Java 开发者可选的能够提高自己能力的讨论会、书籍、在线资源、论坛及培训项目的数量是巨大的。在[最新的 TIOBE 编程语言排行榜](http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html)中， Java 已经晋升榜首
+* 庞大的社区： 在世界各地估计有[超过 9 百万的 Java 开发人员](https://plumbr.eu/blog/java/how-many-java-developers-in-the-world)。这个数字意味着 Java 开发者可选的能够提高自己能力的讨论会、书籍、在线资源、论坛及培训项目的数量是巨大的。在[最新的 TIOBE 编程语言排行榜](http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html)中， Java 已经晋升榜首
 * 快速发展的潜质：Oracle 在 [Java 8](http://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html) 中引入 Lambda 表达式和 Streams。以及即将到来的 Java 9，我们预测 Java 的实用性将继续增加。
 * 对于移动平台的支持：Android 的火爆很大一部分原因是因为 Java。在 Android 上，[ART](https://source.android.com/devices/tech/dalvik/) 为高负荷计算提供了接近本地应用的性能。在 iOS 上，[RoboVM](https://robovm.com/) 使用 [LLVM](http://llvm.org/)，其使用的是与 C/C++/Objective-C/Swift 相同的后端，提供了比 Objective-C 和 Swift 只高不低的性能。
 
