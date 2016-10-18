@@ -178,4 +178,4 @@ $ javac
 有读者反映有时候`java -version`能够执行成功，但`javac`命令不成功的情况，一般是环境变量配置问题，请参阅上面“设置执行路径”章节内容，再仔细检测环境变量的配置。
 
 
-更多安装细节，可以参考 <http://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html>
+更多安装细节，可以参考 <http://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html>，以及<http://docs.oracle.com/javase/tutorial/essential/environment/paths.html>
