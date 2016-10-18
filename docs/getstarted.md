@@ -105,7 +105,7 @@ $ rpm -Uvh jdk-8uversion-linux-x64.rpm
  
 ### UNIX
 
-包括 Linux、Mac OS X 和 Solaris 环境下，在`~/.profile`、`~/.bashrc`或 `~/.bash_profile` 文件末尾添加
+包括 Linux、Mac OS X 和 Solaris 环境下，在`~/.profile`、`~/.bashrc`或 `~/.bash_profile` 文件末尾添加：
 
 ```
 export JAVA_HOME=/usr/java/jdk1.8.0_66
@@ -119,6 +119,8 @@ export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 * Linux 下用冒号“:”来分隔路径
 * $PATH 、$CLASSPATH、 $JAVA_HOME 是用来引用原来的环境变量的值
 * export 是把这三个变量导出为全局变量
+
+比如，在 CentOS 下，需编辑`/etc/profile`文件。
 
 ## 测试
 
