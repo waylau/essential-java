@@ -40,7 +40,7 @@ Windows x64	| 186.65 MB | jdk-8u66-windows-x64.exe
 
 （3）检查当前的安装情况。卸载老版本的 JDK
 
-检查当前的安装情况：
+检查当前的安装情况，比如：
 
 ```shell
 # rpm -qa | grep  jdk
@@ -65,6 +65,23 @@ jdk1.8.0_102-1.8.0_102-fcs.x86_64
 # rpm -ivh jdk-8uversion-linux-x64.rpm
 ```
 
+比如：
+
+```shell
+# rpm -ivh jdk-8u102-linux-x64.rpm
+Preparing...                ########################################### [100%]
+   1:jdk1.8.0_102           ########################################### [100%]
+Unpacking JAR files...
+	tools.jar...
+	plugin.jar...
+	javaws.jar...
+	deploy.jar...
+	rt.jar...
+	jsse.jar...
+	charsets.jar...
+	localedata.jar...
+ ```
+ 
 （5）升级
 
 ```shell
