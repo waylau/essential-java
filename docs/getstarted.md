@@ -43,32 +43,32 @@ Windows x64	| 186.65 MB | jdk-8u66-windows-x64.exe
 检查当前的安装情况，比如：
 
 ```shell
-# rpm -qa | grep  jdk
+$ rpm -qa | grep  jdk
 jdk1.8.0_102-1.8.0_102-fcs.x86_64
 ```
 
 若有老版本 JDK，则需先卸载老版本：
 
 ```shell
-# rpm -e package_name
+$ rpm -e package_name
  ```
  
 比如：
 
 ```shell
-# rpm -e jdk1.8.0_102-1.8.0_102-fcs.x86_64
+$ rpm -e jdk1.8.0_102-1.8.0_102-fcs.x86_64
  ```
 
 （4）安装
 
 ```shell
-# rpm -ivh jdk-8uversion-linux-x64.rpm
+$ rpm -ivh jdk-8uversion-linux-x64.rpm
 ```
 
 比如：
 
 ```shell
-# rpm -ivh jdk-8u102-linux-x64.rpm
+$ rpm -ivh jdk-8u102-linux-x64.rpm
 Preparing...                ########################################### [100%]
    1:jdk1.8.0_102           ########################################### [100%]
 Unpacking JAR files...
@@ -85,7 +85,7 @@ Unpacking JAR files...
 （5）升级
 
 ```shell
-# rpm -Uvh jdk-8uversion-linux-x64.rpm
+$ rpm -Uvh jdk-8uversion-linux-x64.rpm
 ```
 
 安装完成后，可以删除`.rpm`文件，以节省空间。 安装完后，无需重启主机，即可使用 JDK。
@@ -116,7 +116,7 @@ export PATH=usr/local/java/jdk1.8.0_66:$PATH
 测试安装是否正确，可以在 shell 窗口，键入：
 
 ```shell
-java -version
+$ java -version
 ```
 
 若能看到如下信息，则说明 JDK 安装成功：
@@ -130,7 +130,7 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.66-b17, mixed mode)
 最好再执行下`javac`，以测试环境变量是否设置正确：
 
 ```shell
-# javac
+$ javac
 用法: javac <options> <source files>
 其中, 可能的选项包括:
   -g                         生成所有调试信息
