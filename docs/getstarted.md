@@ -96,7 +96,7 @@ $ rpm -Uvh jdk-8uversion-linux-x64.rpm
 
 ### Windows
 
-增加一个 `JAVA_HOME` 环境变量，值是 JDK 的安装目录。如 `C:\Program Files\Java\jdk1.8.0_66\bin` ，注意后边不带分号
+增加一个 `JAVA_HOME` 环境变量，值是 JDK 的安装目录。如 `C:\Program Files\Java\jdk1.8.0_66` ，注意后边不带分号
 
 在 `PATH` 的环境变量里面增加 `%JAVA_HOME%\bin;` 
 
