@@ -30,5 +30,11 @@ This is the summary of my book.
 	* [Socket](docs/socket.md)
 	* [I/O 模型的演进](docs/io-model.md)
 * [JDBC](docs/jdbc.md)
+* [异常](docs/exceptions.md)
+	* [捕获、处理异常](docs/exceptions-catch-and-handle.md)
+	* [如何抛出异常](docs/exceptions-throw.md)
+	* [使用 try-with-resources 声明](docs/exceptions-try-with-resources.md)
+	* [未检查异常](docs/exceptions-unchecked-exception.md)
+	* [使用异常带来的优势](docs/exceptions-advantages.md)
 * [附录](docs/appendix.md)
 * To be continued ...未完待续...
