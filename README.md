@@ -7,7 +7,7 @@ Essential Java, is a book about the Essentials of Java Programming.
 There is also a GitBook version of this book: <http://waylau.gitbooks.io/essential-java>.
 
 
-《Java 编程要点》是一本 Java 的开源学习教程，主要介绍 Java 中应用广泛的部分（言外之意，本书不涉 Applet 以及 GUI 框架）。本书也会包括最新版本 Java 8 中的新特性，图文并茂，并通过大量实例让你走近 Java 的世界！
+《Java 编程要点》是一本 Java 的开源学习教程，主要介绍 Java 中应用广泛的部分（言外之意，本书不涉 Applet 以及 GUI 框架）。本书包括最新版本 Java 8 中的新特性，以及部分 JDK 9里面的内容，图文并茂，并通过大量实例带你走近 Java 的世界！
 
 本书业余时间所著，水平有限、时间紧张，难免疏漏，欢迎指正，
 
