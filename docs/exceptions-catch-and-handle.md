@@ -163,6 +163,10 @@ finally {
 
 考虑在这些情况下使用try-with-resources语句，当不再需要时自动释放系统资源。 
 
+### 源码
+
+本章例子的源码，可以在 <https://github.com/waylau/essential-java> 中 `com.waylau.essentialjava.exception` 包下找到。
+
 
 ## try-with-resources 语句
 
