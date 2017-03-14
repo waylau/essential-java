@@ -327,3 +327,79 @@ public @interface Schedules {
 ### 设计考虑
 
 当设计一个注解类型，你必须考虑到该类型的注解的基数(cardinality)。现在可以使用一个注释零次，一次，或者，如果注解的类型被标以`@Repeatable`，则不止一次。另外，也可以通过使用`@Target`元注解来限制注解类型在哪里使用。例如，您可以创建一个只能在方法和字段使用可重复的注解类型。精心设计的注解类型是非常重要的，要确保使用注解的程序员感觉越灵活和强大越好。
+
+
+## 示例
+
+### 如何定义注解
+
+我们自定义了一个注解 MyAnnotation，用来标识我们是什么公司:
+ 
+```
+@Documented
+@Retention(RUNTIME)
+public @interface MyAnnotation {
+	String company() default "waylau.com";
+}
+```
+
+该注解只有一个方法声明 company()，默认值是字符串“waylau.com”。
+
+### 如何使用注解
+
+下面演示下如何用这个注解。
+
+我们在测试类 AnnotationTest 的方法上加上了我们的注解，并设了值“www.waylau.com”：
+
+```
+class AnnotationTest {
+
+	@MyAnnotation(company="https://waylau.com")
+    public void execute(){
+        System.out.println("do something~");
+    }
+}
+```
+
+### 如果获取注解的信息
+
+通过反射机制，我们可以获取到注解的信息：
+
+```
+AnnotationTest test = new AnnotationTest();
+
+test.execute();
+
+// 获取 AnnotationTest 的Class实例
+Class<AnnotationTest> c = AnnotationTest.class;
+
+// 获取需要处理的方法Method实例
+Method method = c.getMethod("execute", new Class[]{});
+
+// 判断该方法是否包含 MyAnnotation 注解
+if(method.isAnnotationPresent(MyAnnotation.class)){
+	
+    // 获取该方法的 MyAnnotation 注解实例
+    MyAnnotation myAnnotation = method.getAnnotation(MyAnnotation.class);
+    
+    // 执行该方法
+    method.invoke(test, new Object[]{});
+    
+    // 获取 myAnnotation 的属性值
+    String company = myAnnotation.company();
+    System.out.println(company);
+}
+
+// 获取方法上的所有注解
+Annotation[] annotations = method.getAnnotations();
+	for(Annotation annotation : annotations){
+	    System.out.println(annotation);
+	}
+}
+```
+
+执行，正常情况下能看到如下打印信息：
+
+```
+```
+ 
