@@ -1,6 +1,6 @@
 # 注解（Annotations）
 
-注解为程序提供元数据，但是，它不是程序的一部分。它们不会直接影响在注解的代码操作。
+注解为程序提供元数据（metadata）.元数据又称中介数据、中继数据，为描述数据的数据（data about data），主要是描述数据属性（property）的信息。它不会影响程序的编译方式，也不会影响最终的编译结果。
 
 注解有如下的使用场景：
 
@@ -10,6 +10,7 @@
 
 ## 注解的格式
 
+注解的格式的通常拥有键/值对，其键就是方法名。
 格式如下：
 
 ```
@@ -129,7 +130,7 @@ public class Generation3List extends Generation2List {
 }
 ```
 
-注解的声明，就像在 interface 声明前面添加一个`@`字符(`@`是AT,即 Annotation Type)。注解类型，其实是接口的一种形式，后面会讲到。就目前而言，你不需要了解。
+注解的声明，就像在 interface 声明前面添加一个`@`字符(`@`是AT,即 Annotation Type)。注解类型，其实是接口的一种特殊形式，后面会讲到。就目前而言，你不需要了解。
 
 注解的声明的正文，包括注解元素的声明，看起来很像方法。注意，这里可以定义可选的默认值。
 
@@ -227,9 +228,9 @@ void useDeprecatedMethod() {
 
 `@Retention` 注解指定了标记的注解如何存储：
 
-* RetentionPolicy.SOURCE - 该标记注解只保留在源码级，而由编译器忽略。
-* RetentionPolicy.CLASS - 该标记注释是由编译器在编译时保留，但由 Java 虚拟机（JVM）忽略。
-* RetentionPolicy.RUNTIME - 该标记注解由JVM保留，因此可以使用在运行时环境。
+* RetentionPolicy.SOURCE - 该标记注解只保留在源码级，在编译阶段丢弃。这些注解在编译结束之后就不再有任何意义，所以它们不会写入字节码。`@Override`、`@SuppressWarnings`都属于这类注解。
+* RetentionPolicy.CLASS - 该标记注释是由编译器在编译时保留， 在类加载的时候丢弃。在字节码文件的处理中有用。注解默认使用这种方式。
+* RetentionPolicy.RUNTIME - 该标记注解由JVM保留，因此可以使用在运行时环境。因此可以使用反射机制读取该注解的信息。我们自定义的注解通常使用这种方式。
 
 `@Documented`注释表明，只要指定哪些元素应该使用 Javadoc 工具。 （默认情况下，注解不包括在 Javadoc 中。）有关详细信息，请参阅的 [Javadoc 工具页面](https://docs.oracle.com/javase/8/docs/technotes/guides/javadoc/index.html)。
 
