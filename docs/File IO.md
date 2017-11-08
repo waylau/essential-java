@@ -639,7 +639,7 @@ Files 类提供了两个删除方法。
         System.err.println(x);
     }
 
-[deleteIfExists(Path)](https://docs.oracle.com/javase/8/docs/api/java/nio/file/Files.html#deleteIfExists-java.nio.file.Path-) 同样是删除文件，但在文件不存在时不回抛出异常。这在多个线程处理删除文件又不想抛出异常是很有用的。
+[deleteIfExists(Path)](https://docs.oracle.com/javase/8/docs/api/java/nio/file/Files.html#deleteIfExists-java.nio.file.Path-) 同样是删除文件，但在文件不存在时不会抛出异常。这在多个线程处理删除文件又不想抛出异常是很有用的。
 
 
 ## 复制文件或目录
