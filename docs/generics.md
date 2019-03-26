@@ -553,6 +553,422 @@ List<Integer> li = Arrays.asList(1, 2, 3);
 List<String>  ls = Arrays.asList("one", "two", "three");
 printList(li);
 printList(ls);
-````
+```
 
 因此，要区分场景来选择使用`List<Object>`或是`List<?>`。如果想插入一个Object或者是任意Object的子类，就可以使用`List<Object>`。但只能在`List<?>`中插入null。
+
+
+
+### 下限有界通配符
+
+下限有界通配符将未知类型限制为该类型的特定类型或超类型。使用下限有界通配符语法为`<? super A>`。
+
+假设要编写一个将Integer对象放入列表的方法。为了最大限度地提高灵活性，希望该方法可以处理`List<Integer>`、`List<Number>`或者是`List<Object>`等可以保存Integer值的方法。
+
+比如下面的例子，将数字1到10添加到列表的末尾：
+
+```java
+public static void addNumbers(List<? super Integer> list) {
+    for (int i = 1; i <= 10; i++) {
+        list.add(i);
+    }
+}
+```
+
+### 通配符及其子类
+
+
+可以使用通配符在泛型类或接口之间创建关系。
+
+给定以下两个常规（非泛型）类：
+
+
+```java
+class A { /* ... */ }
+class B extends A { /* ... */ }
+```
+
+下面的代码是成立的：
+
+```java
+B b = new B();
+A a = b;
+```
+
+此示例显示常规类的继承遵循此子类型规则：如果B扩展A，则类B是类A的子类型。但此规则不适用于泛型类型：
+
+
+```java
+List<B> lb = new ArrayList<>();
+List<A> la = lb;   // compile-time error
+```
+
+鉴于Integer是Number的子类型，`List<Integer>`和`List<Number>`之间的关系是什么？下图显示了`List<Integer>`和`List<Number>`的公共父级是未知类型`List<?>`。
+
+![](../images/generics/generics-listParent.gif)
+
+
+尽管Integer是Number的子类型，但`List<Integer>`并不是`List<Number>`的子类型。
+
+为了在这些类之间创建关系以便代码可以通过`List<Integer>`的元素访问Number的方法，需使用上限有界通配符：
+
+```java
+List<? extends Integer> intList = new ArrayList<>();
+List<? extends Number>  numList = intList;  // OK. List<? extends Integer> is a subtype of List<? extends Number>
+```
+
+因为Integer是Number的子类型，而numList是Number对象的列表，所以intList（Integer对象列表）和numList之间现在存在关系。下图显示了使用上限和下限有界通配符声明的多个List类之间的关系。
+
+![](../images/generics/generics-wildcardSubtyping.gif)
+
+## 类型擦除
+
+泛型被引入到Java语言中，以便在编译时提供更严格的类型检查并支持泛型编程。为了实现泛型，Java编译器将类型擦除应用于：
+
+* 如果类型参数是无界的，则用泛型或对象替换泛型类型中的所有类型参数。因此，生成的字节码仅包含普通的类\接口和方法。
+* 如有必要，插入类型铸件以保持类型安全。
+* 生成桥接方法以保留扩展泛型类型中的多态性。
+
+类型擦除能够确保不为参数化类型创建新类，因此，泛型不会产生运行时开销。
+
+
+### 擦除泛型类型
+
+在类型擦除过程中，Java编译器将擦除所有类型参数，并在类型参数有界时将其替换为第一个绑定，如果类型参数为无界，则替换为Object。
+
+考虑以下表示单链表中节点的泛型类：
+
+
+```java
+public class Node<T> {
+
+    private T data;
+    private Node<T> next;
+
+    public Node(T data, Node<T> next) {
+        this.data = data;
+        this.next = next;
+    }
+
+    public T getData() { return data; }
+    // ...
+}
+```
+
+因为类型参数T是无界的，所以Java编译器将其替换为Object：
+
+```java
+public class Node {
+
+    private Object data;
+    private Node next;
+
+    public Node(Object data, Node next) {
+        this.data = data;
+        this.next = next;
+    }
+
+    public Object getData() { return data; }
+    // ...
+}
+```
+
+在以下示例中，泛型Node类使用有界类型参数：
+
+
+```java
+public class Node<T extends Comparable<T>> {
+
+    private T data;
+    private Node<T> next;
+
+    public Node(T data, Node<T> next) {
+        this.data = data;
+        this.next = next;
+    }
+
+    public T getData() { return data; }
+    // ...
+}
+```
+
+
+Java编译器将有界类型参数T替换为第一个绑定类Comparable：
+
+```java
+public class Node {
+
+    private Comparable data;
+    private Node next;
+
+    public Node(Comparable data, Node next) {
+        this.data = data;
+        this.next = next;
+    }
+
+    public Comparable getData() { return data; }
+    // ...
+}
+```
+
+
+### 擦除泛型方法
+
+Java编译器还会擦除泛型方法参数中的类型参数。请考虑以下泛型方法：
+
+```java
+public static <T> int count(T[] anArray, T elem) {
+    int cnt = 0;
+    for (T e : anArray)
+        if (e.equals(elem))
+            ++cnt;
+        return cnt;
+}
+```
+
+因为T是无界的，Java编译器将会将它替换为Object：
+
+```java
+public static int count(Object[] anArray, Object elem) {
+    int cnt = 0;
+    for (Object e : anArray)
+        if (e.equals(elem))
+            ++cnt;
+        return cnt;
+}
+```
+
+假设定义了以下类：
+
+```java
+class Shape { /* ... */ }
+class Circle extends Shape { /* ... */ }
+class Rectangle extends Shape { /* ... */ }
+```
+
+可以使用泛型方法绘制不同的图形：
+
+```java
+public static <T extends Shape> void draw(T shape) { /* ... */ }
+```
+
+Java编译器将会将T替换为Shape：
+
+```java
+public static void draw(Shape shape) { /* ... */ }
+```
+
+
+## 使用泛型的一些限制
+
+### 无法使用基本类型实例化泛型
+
+请考虑以下参数化类型：
+
+```java
+class Pair<K, V> {
+
+    private K key;
+    private V value;
+
+    public Pair(K key, V value) {
+        this.key = key;
+        this.value = value;
+    }
+
+    // ...
+}
+```
+
+创建Pair对象时，不能将基本类型替换为类型参数K或V：
+
+```java
+Pair<int, char> p = new Pair<>(8, 'a');  // compile-time error
+```
+
+只能将非基本类型替换为类型参数K和V：
+
+```java
+Pair<Integer, Character> p = new Pair<>(8, 'a');
+```
+
+
+此时，Java编译器会自动装箱，将8转为`Integer.valueOf(8)`，将'a'转为`Character('a')`：
+
+```java
+Pair<Integer, Character> p = new Pair<>(Integer.valueOf(8), new Character('a'));
+```
+
+### 无法创建类型参数的实例
+
+无法创建类型参数的实例。例如，以下代码导致编译时错误：
+
+```java
+public static <E> void append(List<E> list) {
+    E elem = new E();  // compile-time error
+    list.add(elem);
+}
+```
+
+作为解决方法，您可以通过反射创建类型参数的对象：
+
+```java
+public static <E> void append(List<E> list, Class<E> cls) throws Exception {
+    E elem = cls.newInstance();   // OK
+    list.add(elem);
+}
+```
+
+可以按如下方式调用append方法：
+
+```java
+List<String> ls = new ArrayList<>();
+append(ls, String.class);
+```
+
+### 无法声明类型为类型参数的静态字段
+
+类的静态字段是类的所有非静态对象共享的类级变量。因此，不允许使用类型参数的静态字段。考虑以下类：
+
+```java
+public class MobileDevice<T> {
+    private static T os;
+
+    // ...
+}
+```
+
+如果允许类型参数的静态字段，则以下代码将混淆：
+
+```java
+MobileDevice<Smartphone> phone = new MobileDevice<>();
+MobileDevice<Pager> pager = new MobileDevice<>();
+MobileDevice<TabletPC> pc = new MobileDevice<>();
+```
+
+因为静态字段os由phone、pager、pc所共享的，所以os的实际类型是什么呢？它不能同时是Smartphone、Pager或者TabletPC。因此，无法创建类型参数的静态字段。
+
+
+### 无法使用具有参数化类型的强制转换或instanceof
+
+因为Java编译器会擦除通用代码中的所有类型参数，所以无法验证在运行时使用泛型类型的参数化类型：
+
+```java
+public static <E> void rtti(List<E> list) {
+    if (list instanceof ArrayList<Integer>) {  // compile-time error
+        // ...
+    }
+}
+```
+
+传递给rtti方法的参数化类型集是：
+
+```java
+S = { ArrayList<Integer>, ArrayList<String> LinkedList<Character>, ... }
+```
+
+运行时不跟踪类型参数，因此无法区分`ArrayList<Integer>`和`ArrayList<String>`。可以做的最多是使用无界通配符来验证列表是否为ArrayList：
+
+```java
+public static void rtti(List<?> list) {
+    if (list instanceof ArrayList<?>) {  // OK; instanceof requires a reifiable type
+        // ...
+    }
+}
+```
+
+通常，除非通过无界通配符对参数化进行参数化，否则无法强制转换为参数化类型。例如：
+
+```java
+List<Integer> li = new ArrayList<>();
+List<Number>  ln = (List<Number>) li;  // compile-time error
+```
+
+但是，在某些情况下，编译器知道类型参数始终有效并允许强制转换。例如：
+
+
+```java
+List<String> l1 = ...;
+ArrayList<String> l2 = (ArrayList<String>)l1;  // OK
+```
+
+### 无法创建参数化类型的数组
+
+无法创建参数化类型的数组。例如，以下代码无法编译：
+
+```java
+List<Integer>[] arrayOfLists = new List<Integer>[2];  // compile-time error
+```
+
+以下代码说明了将不同类型插入到数组中时会发生什么：
+
+```java
+Object[] strings = new String[2];
+strings[0] = "hi";   // OK
+strings[1] = 100;    // An ArrayStoreException is thrown.
+```
+
+如果使用通用列表尝试相同的操作，则会出现问题：
+
+```java
+Object[] stringLists = new List<String>[];  // compiler error, but pretend it's allowed
+stringLists[0] = new ArrayList<String>();   // OK
+stringLists[1] = new ArrayList<Integer>();  // An ArrayStoreException should be thrown,
+                                            // but the runtime can't detect it.
+```
+
+如果允许参数化列表数组，则前面的代码将无法抛出所需的ArrayStoreException。
+
+### 无法创建、捕获或抛出参数化类型的对象
+
+泛型类不能直接或间接扩展Throwable类。例如，以下类将无法编译：
+
+```java
+// Extends Throwable indirectly
+class MathException<T> extends Exception { /* ... */ }    // compile-time error
+
+// Extends Throwable directly
+class QueueFullException<T> extends Throwable { /* ... */ // compile-time error
+```
+
+方法无法捕获类型参数的实例：
+
+```java
+public static <T extends Exception, J> void execute(List<J> jobs) {
+    try {
+        for (J job : jobs)
+            // ...
+    } catch (T e) {   // compile-time error
+        // ...
+    }
+}
+```
+
+但是可以在throws子句中使用类型参数：
+
+```java
+class Parser<T extends Exception> {
+    public void parse(File file) throws T {     // OK
+        // ...
+    }
+}
+```
+
+
+### 无法重载每个重载的形式参数类型擦除到相同原始类型的方法
+
+类不能有两个重载方法，因为它们在类型擦除后具有相同的签名。
+
+
+
+
+
+```java
+public class Example {
+    public void print(Set<String> strSet) { }
+    public void print(Set<Integer> intSet) { }
+}
+```
+
+
+上述例子将生成编译时错误。
